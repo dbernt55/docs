@@ -8,16 +8,16 @@ Einige Geräte, wie z.b. Zähler ([`meters`](/docs/reference/configuration/meter
 
 Die `meter` Konfiguration besteht hierbei aus der Art der pysikalischen Verbindung (Schnittstelle), ggf. den technischen Schnittstellenparametern, dem verwendeten Modbus-Protokoll, der eindeutigen Modbus-ID des Gerätes auf dem Bus und der Nummer und Art des Registers welches letztendlich gelesen oder geschrieben werden soll.
 
-Zu beachten ist, dass es drei verschiedene Modbus-Protokolle gibt: Modbus RTU, Modbus ASCII und Modbus TCP. Diese können technisch auch über unterschiedliche Schnittstellentypen übertragen werden können.
+Zu beachten ist, dass es drei verschiedene Modbus-Protokolle gibt: Modbus RTU, Modbus ASCII und Modbus TCP. Diese können technisch auch über unterschiedliche Schnittstellentypen übertragen werden.
 Die klassische Variante ist dabei Modbus RTU über eine serielle RS485-Busschnittstelle wie sie bei den meisten Zählern oder manchen Wallboxen genutzt wird. Geräte mit einer nativen Netzwerkschnittstelle (Ethernet/WiFi) hingegen werden typischerweise über das Modbus TCP-Protokoll angesprochen.
 
-Soll ein serielles Modbus-Gerät über einen Schnittstellenkonverter via Netzwerk (Ethernet/WiFi/PowerLAN) angebunden werden kommt dabei letztendlich ein Modbus RTU Protokoll über eine TCP/IP-Verbindung zustande.
-Das Modbus RTU Protokoll wird dabei 1:1 über das Netzwerk übertragen (sprich "getunnelt"). Auch wenn der Transportweg (TCP/IP) hierbei identisch ist handelt es sich vom Protokoll dennoch NICHT um Modbus TCP!
+Soll ein serielles Modbus-Gerät über einen Schnittstellenkonverter via Netzwerk (Ethernet/WiFi/PowerLAN) angebunden werden, kommt dabei letztendlich ein Modbus RTU Protokoll über eine TCP/IP-Verbindung zustande.
+Das Modbus RTU Protokoll wird dabei 1:1 über das Netzwerk übertragen (sprich "getunnelt"). Auch wenn der Transportweg (TCP/IP) hierbei identisch ist, handelt es sich vom Protokoll dennoch NICHT um Modbus TCP.
 Hierbei muss sehr genau zwischen Protokoll und Transportweg unterschieden werden. "Modbus (RTU) over TCP" ist etwas anderes als Modbus TCP!
 
 :::caution
 Achtung: Es gibt auch komplexere Schnittstellenkonverter die optional das Modbus-Protokoll selbst zwischen Modbus RTU und Modbus TCP übersetzen können!
-Ist diese Funktion aktiv muss evcc mit dem Konverter mittels Modbus TCP kommunizieren während der Konverter auf der anderen Seite mit dem seriellen Gerät via Modbus RTU kommuniziert und die beiden Protokolle bidirektional übersetzt.
+Ist diese Funktion aktiv, muss evcc mit dem Konverter mittels Modbus TCP kommunizieren während der Konverter auf der anderen Seite mit dem seriellen Gerät via Modbus RTU kommuniziert und die beiden Protokolle bidirektional übersetzt.
 Hier muss man ggf. genau auf die Gerätespezifikation und Konfiguration achten sonst ist keine Kommunikation möglich!
 :::
 
@@ -29,11 +29,11 @@ Die evcc-Konfiguration betrifft dann nur den Abschnitt zum Konverter.
 ### Serielle Verbindung (RS485)
 
 Wenn das Gerät direkt über einen RS485-Adapter verbunden ist (Modbus RTU), muss `device` und die seriellen Kommunikationsparameter `baudrate`, `comset` entsprechend der Gerätekonfiguration angegeben werden.
-Dazu bitte die jeweilige Betriebanleitung, Datenblätter oder Systemeinstellungen vergleichen.
+Dazu bitte die jeweilige Betriebanleitung, Datenblätter oder Systemeinstellungen vergleichen und ggf. anpassen.
 
 :::info
-An einem seriellen RS485-Bus lassen sich mehrere Geräte mit identischen Kommunikationsparameter betreiben wenn jedes Gerät eine eigene Modbus ID zugewiesen bekommen hat.
-Lassen sich nicht alle Geräte an einem Bus auf einheitliche Kommunikationseinstellungen (aber unterschiedliche IDs) konfigurieren ist eine Aufteilung auf mehrere voneinander unabhängige Bussysteme erforderlich.
+An einem seriellen RS485-Bus lassen sich mehrere Geräte mit identischen Kommunikationsparameter betreiben, wenn jedes Gerät eine eigene Modbus ID zugewiesen bekommen hat.
+Lassen sich nicht alle Geräte an einem Bus auf einheitliche Kommunikationseinstellungen (aber unterschiedliche IDs) konfigurieren, ist eine Aufteilung auf mehrere voneinander unabhängige Bussysteme erforderlich.
 :::
 
 :::caution
@@ -64,7 +64,7 @@ uri: 192.168.0.11:502
 
 ### Serielles Gerät über Netzwerkverbindung (mit Schnittstellenkonverter)
 
-Wird ein serielles Gerät über einen zwischengeschalteten transparenten RS485-IP-Schnittstellenkonverter (ohne Protokollübersetzung) angeschlossen muss das Protokoll über die TCP/IP-Verbindung zusätzlich mittels `rtu: true` auf Modbus RTU umgestellt werden.
+Wird ein serielles Gerät über einen zwischengeschalteten transparenten RS485-IP-Schnittstellenkonverter (ohne Protokollübersetzung) angeschlossen, muss das Protokoll über die TCP/IP-Verbindung zusätzlich mittels `rtu: true` auf Modbus RTU umgestellt werden.
 
 **Beispiel**:
 
@@ -98,7 +98,7 @@ Die integrierten vordefinierten Gerätemodelle `model` sind identisch zu [MBMD](
 
 Alle davon abweichenden `model` werden als Gerät vom Typ _SunSpec_ behandelt.
 
-Verwende `value` um den Wert der vom Gerät gelesen werden soll zu definieren. Alle unterstützten Werte sind auf [MBMD](https://github.com/volkszaehler/mbmd/blob/master/meters/measurements.go#L28) voreingestellt.
+Verwende `value` um den Wert, der vom Gerät gelesen werden soll, zu definieren. Alle unterstützten Werte sind auf [MBMD](https://github.com/volkszaehler/mbmd/blob/master/meters/measurements.go#L28) voreingestellt.
 
 Im Falle eines _SunSpec_-kompatiblen Wechselrichters oder Zählers werden die zu lesenden Werte in der Form `model:[block:]point` nach der _SunSpec_-Definition angegeben. Zum Beispiel wird die DC-Leistung auf dem zweiten String eines dreiphasigen PV-Wechselrichters (enspricht SunSpec Model 103) wie folgt abgefragt: `value: 103:2:W`.
 
@@ -128,8 +128,8 @@ Die Definition eines Registers benötigt folgende Parameter:
 
 Weitere zulässige Parameter einer manuellen Konfiguration sind:
 
-- `scale`: Fließkommazahl, die zur Konvertierung von gelesenen Werten (z. B. W in kW oder umgekehrt) verwendet werden kann. Dieser Wert wird mit dem gelesenen und decodierten Rohwert multipliziert.
-- `timeout`: modbus timeout. Ohne Einheit ist der Wertt in ns, ansonsten Einheit mit angeben, z. B. 10s für 10 Sekunden.
+- `scale`: Fließkommazahl, die zur Konvertierung von gelesenen Werten (z.B. W in kW oder umgekehrt) verwendet werden kann. Dieser Wert wird mit dem gelesenen und decodierten Rohwert multipliziert.
+- `timeout`: modbus timeout. Ohne Einheit ist der Wert in ns, ansonsten Einheit mit angeben, z. B. 10s für 10 Sekunden.
 
 **Beispiel**:
 
